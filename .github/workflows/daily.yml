@@ -1,0 +1,39 @@
+# 매일 전날 비행 기록을 공항별 표로 만들고 사이트를 다시 배포한다.
+# 기록은 03:30 UTC 쯤 올라오므로 여유를 두고 돈다.
+name: daily-flights
+
+on:
+  schedule:
+    - cron: '40 5 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  actions: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 항공편 기록 처리와 사이트 조립
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash harvest/daily.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
