@@ -36,8 +36,16 @@ Map and flight data in this game are derived from the databases above and are of
 <li>지구 사진 Earth imagery: NASA Blue Marble, Black Marble (public domain)</li>
 <li>재질 Materials: <a href="https://ambientcg.com/">ambientCG</a>, CC0</li>
 <li>하늘·반사 Skies: <a href="https://polyhaven.com/">Poly Haven</a>, CC0</li>
-<li>사람 모델 Character models: Quaternius, public domain</li>
+<li>사람 모델·동작 Character models and animation: Quaternius, CC0</li>
 <li>안내 기호 Pictograms: AIGA / U.S. DOT Symbol Signs, public domain</li>
+</ul>
+
+<h2>문화재·명소 Heritage gallery</h2>
+<ul>
+<li>고른 목록·좌표 Selection and coordinates: <a href="https://www.wikidata.org/">Wikidata</a>, CC0. 위키데이터의 세계유산·문화재 지정과 언어판 수로 자동 선정했습니다 Chosen automatically from World Heritage and heritage listings and the number of Wikipedia language editions.</li>
+<li>설명 글 Descriptions: excerpts from <a href="https://www.wikipedia.org/">Wikipedia</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. 각 설명에 글 제목과 원문 링크가 있습니다. 게임에 쓴 발췌문도 같은 조건으로 제공합니다 Each description names and links its article; the excerpts used here are offered under the same licence.</li>
+<li>사진 Photographs: <a href="https://commons.wikimedia.org/">Wikimedia Commons</a>. 작가와 이용 조건은 아래 표와 게임의 설명 화면에 있습니다 Authors and licences are listed below and on each description screen.</li>
+<li>듣기 Listening uses the voices of your own device. 전체 글을 펼치면 그때 위키백과에서 받습니다 The full article is fetched from Wikipedia only when you open it.</li>
 </ul>
 
 <h2>글꼴 Fonts</h2>
@@ -50,5 +58,25 @@ Map and flight data in this game are derived from the databases above and are of
 <ul>
 <li>three.js, d3-geo, topojson-client, meshoptimizer: MIT or ISC</li>
 </ul>
+<h2>사진 출처 Photo credits</h2>
+<p id="photo-note">불러오는 중 Loading</p>
+<ul id="photo-list"></ul>
+<script>
+fetch('heritage/credits.json').then((r) => r.json()).then((rows) => {
+  const list = document.getElementById('photo-list');
+  const items = Object.values(rows).sort((a, b) => a[0].localeCompare(b[0]));
+  document.getElementById('photo-note').textContent = items.length + ' photographs';
+  for (const [name, by, lic, page] of items) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = page;
+    a.textContent = name;
+    li.append(a, ' : ' + (by || 'Wikimedia Commons') + ', ' + lic);
+    list.append(li);
+  }
+}).catch(() => {
+  document.getElementById('photo-note').textContent = '';
+});
+</script>
 </body>
 </html>

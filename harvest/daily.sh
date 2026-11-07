@@ -32,7 +32,12 @@ done
 
 # 사이트 조립: 게임 파일 + 오늘 쓸 날짜의 표(7일 전 앞뒤)
 mkdir -p _site/flights
-cp -r index.html credits.html og.jpg assets lang _site/
+cp -r index.html credits.html og.jpg assets lang ads _site/
+# 문화재 자료는 저장소가 아니라 Release 묶음으로 둔다(사진 4천여 장).
+if gh release download heritage -p 'heritage-site.tar.gz' -D dl --clobber; then
+  mkdir -p _site/heritage
+  tar -xzf dl/heritage-site.tar.gz -C _site/heritage
+fi
 for back in 9 8 7 6 5; do
   day=$(date -u -d "-$back day" +%F)
   name="flights-$day.tar.gz"

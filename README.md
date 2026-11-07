@@ -10,4 +10,6 @@
 
 - `harvest/`: [ADSB.lol](https://github.com/adsblol/globe_history_2026) 비행 기록에서 공항별 표를 만드는 도구. 매일 GitHub Actions 로 돕니다.
 - 생성한 표는 [Releases](../../releases/tag/flights) 에 있으며 ODbL 1.0 으로 제공합니다.
+- 문화재 사진·설명 묶음은 [Releases](../../releases/tag/heritage) 의 `heritage-site.tar.gz` 에 있고 배포할 때 사이트에 풀립니다. 설명 글은 위키백과 발췌(CC BY-SA 4.0), 사진은 위키미디어 공용(사진별 조건)입니다.
+- 광고판 설정은 `ads/ads.json` 입니다. 팔린 광고를 여기에 넣으면 다시 빌드하지 않아도 나옵니다.
 - 자료·글꼴 출처는 [credits.html](credits.html) 에 있습니다.
