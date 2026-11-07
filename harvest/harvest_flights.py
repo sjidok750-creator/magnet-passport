@@ -246,7 +246,12 @@ def fill(leg, routes, airports):
     if origin is None or dest is None:
         return None
     a, b = airports[origin], airports[dest]
-    if km(a[2], a[3], b[2], b[3]) < MIN_KM:
+    dist = km(a[2], a[3], b[2], b[3])
+    if dist < MIN_KM:
+        return None
+    # 지상 신호가 끊겨 앞뒤 편이 한 편으로 묶이면 시간이 말이 안 된다.
+    hours = (t2 - t1) / 3600
+    if hours < dist / 1150 or hours > dist / 550 + 1.5:
         return None
     return (kind, call, int(t1), int(t2), origin, dest, track, observed)
 
