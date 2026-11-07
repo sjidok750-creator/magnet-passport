@@ -1,0 +1,4 @@
+# 리눅스에서 도는 파일
+*.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
